@@ -1,4 +1,5 @@
 export { CarCard } from './CarCard'
 export { AddonsCard } from './AddonsCard'
 export { IconButton } from './IconButton'
+export { LabelButton } from './LabelButton'
 export { ImageSlider } from './ImageSlider'

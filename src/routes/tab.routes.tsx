@@ -8,6 +8,6 @@ const { Navigator, Screen } = createStackNavigator()
 
 export const TabRoutes = () => (
   <Navigator headerMode="none">
-    <Screen name="CarDetails" component={P.CarDetails} />
+    <Screen name="Scheduling" component={P.Scheduling} />
   </Navigator>
 )

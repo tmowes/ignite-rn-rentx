@@ -45,6 +45,9 @@ export const CarDetails = () => {
           acelerar.
         </S.About>
       </S.Content>
+      <S.Footer>
+        <C.LabelButton label="hi" />
+      </S.Footer>
     </S.Container>
   )
 }
