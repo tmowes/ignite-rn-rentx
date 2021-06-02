@@ -1,5 +1,5 @@
 import React from 'react'
 
-import { TabRoutes } from './tab.routes'
+import { StackRoutes } from './stack.routes'
 
-export const AppRoutes = () => <TabRoutes />
+export const AppRoutes = () => <StackRoutes />

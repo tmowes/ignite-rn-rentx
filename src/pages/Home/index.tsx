@@ -1,23 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { RFValue } from 'react-native-responsive-fontsize'
+import { useNavigation } from '@react-navigation/native'
 
-import { carData } from '../../data/data'
 import * as C from '../../components'
 import Logo from '../../assets/logo.svg'
 import * as S from './styles'
+import { api } from '../../services'
+import { Car } from '../../dtos'
 
-export const Home = () => (
-  <S.Container>
-    <S.Header>
-      <Logo width={RFValue(108)} height={RFValue(12)} />
-      <S.TotalCars>Total de 12 carros</S.TotalCars>
-    </S.Header>
+export const Home = () => {
+  const { navigate } = useNavigation()
+  const [isLoading, setIsLoading] = useState(true)
+  const [cars, setCars] = useState<Car[]>([])
 
-    <S.CarsList
-      data={carData}
-      keyExtractor={(item, i) => `${item.thumbnail}${i}`}
-      renderItem={({ item }) => <C.CarCard data={item} />}
-    />
-  </S.Container>
-)
+  const loadCars = async () => {
+    try {
+      const { data } = await api.get('cars')
+      setCars(data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadCars()
+  }, [])
+
+  return (
+    <S.Container>
+      <S.Header>
+        <Logo width={RFValue(108)} height={RFValue(12)} />
+        <S.TotalCars>Total de {cars.length} carros</S.TotalCars>
+      </S.Header>
+      {isLoading ? (
+        <C.Load />
+      ) : (
+        <S.CarsList
+          data={cars}
+          keyExtractor={item => item.id}
+          renderItem={({ item: car }) => (
+            <C.CarCard data={car} onPress={() => navigate('CarDetails', { car })} />
+          )}
+        />
+      )}
+    </S.Container>
+  )
+}

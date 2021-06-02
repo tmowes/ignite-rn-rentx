@@ -1,52 +1,51 @@
 import React from 'react'
+import { StatusBar } from 'react-native'
 
-import SpeedIcon from '../../assets/speed.svg'
-import AccelerationIcon from '../../assets/acceleration.svg'
-import ForceIcon from '../../assets/force.svg'
-import GasIcon from '../../assets/gasoline.svg'
-import ExchangeIcon from '../../assets/exchange.svg'
-import PeopleIcon from '../../assets/people.svg'
+import { useNavigation, useRoute } from '@react-navigation/native'
+
 import * as C from '../../components'
 import * as S from './styles'
-import { carData } from '../../data/data'
+import { RouteParams } from './types'
+import { getAccessoryIcon } from '../../utils'
 
 export const CarDetails = () => {
-  const { brand, model, rent, thumbnail } = carData[0]
+  const { navigate } = useNavigation()
+  const { params } = useRoute()
+
+  const { car } = params as RouteParams
+
   return (
     <S.Container>
       <S.Header>
-        <C.IconButton onPress={() => true} />
+        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+        <C.IconButton />
       </S.Header>
       <S.SliderContainer>
-        <C.ImageSlider thumbnails={[thumbnail]} />
+        <C.ImageSlider thumbnails={car.photos} />
       </S.SliderContainer>
       <S.Content>
         <S.Details>
           <S.Description>
-            <S.Brand>{brand}</S.Brand>
-            <S.Model>{model}</S.Model>
+            <S.Brand>{car.brand}</S.Brand>
+            <S.Model>{car.model}</S.Model>
           </S.Description>
           <S.Rent>
-            <S.Period>{rent.period}</S.Period>
-            <S.Price>{`R$ ${rent.price}`}</S.Price>
+            <S.Period>{car.rent.period}</S.Period>
+            <S.Price>{`R$ ${car.rent.price}`}</S.Price>
           </S.Rent>
         </S.Details>
         <S.AddonsContainer>
-          <C.AddonsCard name="380km/h" icon={SpeedIcon} />
-          <C.AddonsCard name="3.2s" icon={AccelerationIcon} />
-          <C.AddonsCard name="800 HP" icon={ForceIcon} />
-          <C.AddonsCard name="Gasolina" icon={GasIcon} />
-          <C.AddonsCard name="Auto" icon={ExchangeIcon} />
-          <C.AddonsCard name="2 pessoas" icon={PeopleIcon} />
+          {car.accessories.map(({ name, type }) => (
+            <C.AddonsCard key={type} name={name} icon={getAccessoryIcon(type)} />
+          ))}
         </S.AddonsContainer>
-        <S.About>
-          Este é automóvel desportivo. Surgiu do lendário touro de lide indultado na
-          praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta de
-          acelerar.
-        </S.About>
+        <S.About>{car.about}</S.About>
       </S.Content>
       <S.Footer>
-        <C.LabelButton label="hi" />
+        <C.LabelButton
+          label="Escolher período do aluguel"
+          onPress={() => navigate('Scheduling')}
+        />
       </S.Footer>
     </S.Container>
   )

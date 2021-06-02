@@ -1,0 +1,1 @@
+export { getAccessoryIcon } from './getAccessoryIcon'

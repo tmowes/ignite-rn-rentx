@@ -1,13 +1,14 @@
 import React from 'react'
 
-import GasIcon from '../../assets/gasoline.svg'
+import { getAccessoryIcon } from '../../utils'
 import * as S from './styles'
 import { CarCardProps } from './types'
 
-export const CarCard = ({ data }: CarCardProps) => {
-  const { brand, model, thumbnail, rent } = data
+export const CarCard = ({ data, ...attrs }: CarCardProps) => {
+  const { brand, model, thumbnail, fuel_type, rent } = data
+  const MotorIcon = getAccessoryIcon(fuel_type)
   return (
-    <S.Container>
+    <S.Container {...attrs}>
       <S.Details>
         <S.Brand>{brand}</S.Brand>
         <S.Model>{model}</S.Model>
@@ -17,7 +18,7 @@ export const CarCard = ({ data }: CarCardProps) => {
             <S.Price>{`R$ ${rent.price}`}</S.Price>
           </S.Rent>
           <S.Type>
-            <GasIcon />
+            <MotorIcon />
           </S.Type>
         </S.About>
       </S.Details>

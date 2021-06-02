@@ -1,15 +1,7 @@
-export type CarCardProps = {
-  data: CarProps
-}
+import { RectButtonProps } from 'react-native-gesture-handler'
 
-export type CarProps = {
-  brand: string
-  model: string
-  thumbnail: string
-  rent: RentProps
-}
+import { Car } from '../../dtos'
 
-export type RentProps = {
-  period: string
-  price: number
+export type CarCardProps = RectButtonProps & {
+  data: Car
 }

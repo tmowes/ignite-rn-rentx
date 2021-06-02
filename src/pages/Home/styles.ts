@@ -4,7 +4,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
 
-import { CarProps } from '../../components/CarCard/types'
+import { Car } from '../../dtos'
 
 export const Container = styled.View`
   ${({ theme: { colors } }) => css`
@@ -38,9 +38,10 @@ export const Title = styled.Text`
   `}
 `
 
-export const CarsList = styled(FlatList as new () => FlatList<CarProps>).attrs({
+export const CarsList = styled(FlatList as new () => FlatList<Car>).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
+    paddingTop: 16,
     paddingHorizontal: 16,
     paddingBottom: getBottomSpace() + 4,
   },

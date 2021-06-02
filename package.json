@@ -6,7 +6,8 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "api": "json-server ./src/services/server.json -H 192.168.2.103 -p 3333 -d 750"
   },
   "jest": {
     "preset": "react-native"
