@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
-    "api": "json-server ./src/services/server.json -H 192.168.2.103 -p 3333 -d 750"
+    "api:h": "json-server ./src/services/server.json -H 192.168.2.103 -p 3333 -d 750",
+    "api:w": "json-server ./src/services/server.json -H 192.168.43.184 -p 3333 -d 750"
   },
   "jest": {
     "preset": "react-native"

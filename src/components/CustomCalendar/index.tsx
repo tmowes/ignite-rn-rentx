@@ -5,11 +5,13 @@ import { Calendar, LocaleConfig } from 'react-native-calendars'
 import { useTheme } from 'styled-components'
 
 import { calendarPTBRLocale } from '../../utils/calendarLocale'
+import { CalendarProps } from './types'
 
 LocaleConfig.locales['pt-br'] = { ...calendarPTBRLocale }
 LocaleConfig.defaultLocale = 'pt-br'
 
-export const CustomCalendar = () => {
+export const CustomCalendar = (props: CalendarProps) => {
+  const { markedDate, onDayPress } = props
   const { colors, fonts } = useTheme()
   return (
     <Calendar
@@ -40,6 +42,9 @@ export const CustomCalendar = () => {
       }}
       firstDay={1}
       minDate={new Date()}
+      markingType="period"
+      markedDates={markedDate}
+      onDayPress={onDayPress}
     />
   )
 }
