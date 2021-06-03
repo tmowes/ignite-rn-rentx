@@ -1,25 +1,77 @@
-import React from 'react'
-import { StatusBar } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Alert, StatusBar } from 'react-native'
 
 import { Feather } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { useTheme } from 'styled-components'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import format from 'date-fns/format'
 
-import SpeedIcon from '../../assets/speed.svg'
-import AccelerationIcon from '../../assets/acceleration.svg'
-import ForceIcon from '../../assets/force.svg'
-import GasIcon from '../../assets/gasoline.svg'
-import ExchangeIcon from '../../assets/exchange.svg'
-import PeopleIcon from '../../assets/people.svg'
 import * as C from '../../components'
 import * as S from './styles'
-import { carData } from '../../data/data'
+import { RentalPeriod, RouteParams } from './types'
+import { getAccessoryIcon, getPlatformDate } from '../../utils'
+import { api } from '../../services'
 
 export const SchedulingDetails = () => {
-  const { brand, model, rent, thumbnail } = carData[0]
   const { navigate } = useNavigation()
   const { colors } = useTheme()
+  const { params } = useRoute()
+
+  const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { car, dates } = params as RouteParams
+
+  const getRentalPeriod = useCallback(() => {
+    setRentalPeriod({
+      startFormatted: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
+      endFormatted: format(
+        getPlatformDate(new Date(dates[dates.length - 1])),
+        'dd/MM/yyyy'
+      ),
+    })
+  }, [dates])
+
+  const rentTotal = useMemo(() => {
+    const days = Number(dates.length)
+    const total = Number(days * car.rent.price)
+    return { days, total }
+  }, [car.rent.price, dates.length])
+
+  const confirmRentalData = async () => {
+    setIsLoading(true)
+    const schedulesByCar = await api.get(`schedules_bycars/${car.id}`)
+    const unavailable_dates = [...schedulesByCar.data.unavailable_dates, ...dates]
+
+    try {
+      await api.post('schedules_byuser', {
+        user_id: 1,
+        car,
+        startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
+        endDate: format(
+          getPlatformDate(new Date(dates[dates.length - 1])),
+          'dd/MM/yyyy'
+        ),
+      })
+
+      await api.put(`schedules_bycars/${car.id}`, {
+        id: car.id,
+        unavailable_dates,
+      })
+      navigate('SchedulingComplete')
+    } catch (error) {
+      Alert.alert('Não foi possivel cadastrar seu agendamento')
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getRentalPeriod()
+  }, [getRentalPeriod])
+
   return (
     <S.Container>
       <S.Header>
@@ -27,26 +79,23 @@ export const SchedulingDetails = () => {
         <C.IconButton />
       </S.Header>
       <S.SliderContainer>
-        <C.ImageSlider thumbnails={[thumbnail]} />
+        <C.ImageSlider thumbnails={car.photos} />
       </S.SliderContainer>
       <S.Content>
         <S.Details>
           <S.Description>
-            <S.Brand>{brand}</S.Brand>
-            <S.Model>{model}</S.Model>
+            <S.Brand>{car.brand}</S.Brand>
+            <S.Model>{car.model}</S.Model>
           </S.Description>
           <S.Rent>
-            <S.Period>{rent.period}</S.Period>
-            <S.Price>{`R$ ${rent.price}`}</S.Price>
+            <S.Period>{car.rent.period}</S.Period>
+            <S.Price>{`R$ ${car.rent.price}`}</S.Price>
           </S.Rent>
         </S.Details>
         <S.AddonsContainer>
-          <C.AddonsCard name="380km/h" icon={SpeedIcon} />
-          <C.AddonsCard name="3.2s" icon={AccelerationIcon} />
-          <C.AddonsCard name="800 HP" icon={ForceIcon} />
-          <C.AddonsCard name="Gasolina" icon={GasIcon} />
-          <C.AddonsCard name="Auto" icon={ExchangeIcon} />
-          <C.AddonsCard name="2 pessoas" icon={PeopleIcon} />
+          {car.accessories.map(({ name, type }) => (
+            <C.AddonsCard key={type} name={name} icon={getAccessoryIcon(type)} />
+          ))}
         </S.AddonsContainer>
         <S.RentalPeriod>
           <S.CalendarIcon>
@@ -54,19 +103,19 @@ export const SchedulingDetails = () => {
           </S.CalendarIcon>
           <S.DateInfo>
             <S.DateTitle>DE</S.DateTitle>
-            <S.DateValue>18/08/2021</S.DateValue>
+            <S.DateValue>{rentalPeriod.startFormatted}</S.DateValue>
           </S.DateInfo>
           <Feather name="chevron-right" size={RFValue(12)} color={colors.text} />
           <S.DateInfo>
             <S.DateTitle>ATÉ</S.DateTitle>
-            <S.DateValue>18/08/2021</S.DateValue>
+            <S.DateValue>{rentalPeriod.endFormatted}</S.DateValue>
           </S.DateInfo>
         </S.RentalPeriod>
         <S.RentalPrice>
           <S.RentalPriceLabel>TOTAL</S.RentalPriceLabel>
           <S.RentalPriceDetails>
-            <S.RentalPriceQuota>R$ 580 x3 diarias</S.RentalPriceQuota>
-            <S.RentalPriceTotal>R$ 1740.00</S.RentalPriceTotal>
+            <S.RentalPriceQuota>{`R$ ${car.rent.price} x${rentTotal.days} diarias`}</S.RentalPriceQuota>
+            <S.RentalPriceTotal>{`R$ ${rentTotal.total}`}</S.RentalPriceTotal>
           </S.RentalPriceDetails>
         </S.RentalPrice>
       </S.Content>
@@ -74,7 +123,9 @@ export const SchedulingDetails = () => {
         <C.LabelButton
           label="Alugar agora"
           color={colors.success}
-          onPress={() => navigate('SchedulingComplete')}
+          loading={isLoading}
+          enabled={!isLoading}
+          onPress={confirmRentalData}
         />
       </S.Footer>
     </S.Container>

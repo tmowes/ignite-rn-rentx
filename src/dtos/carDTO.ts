@@ -19,3 +19,11 @@ export type Rent = {
   period: string
   price: number
 }
+
+export type CarByUser = {
+  car: Car
+  id: string
+  user_id: string
+  startDate: string
+  endDate: string
+}

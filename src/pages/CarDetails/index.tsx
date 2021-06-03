@@ -44,7 +44,7 @@ export const CarDetails = () => {
       <S.Footer>
         <C.LabelButton
           label="Escolher período do aluguel"
-          onPress={() => navigate('Scheduling')}
+          onPress={() => navigate('Scheduling', { car })}
         />
       </S.Footer>
     </S.Container>

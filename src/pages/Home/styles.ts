@@ -1,5 +1,7 @@
 import { FlatList } from 'react-native'
 
+import { Ionicons } from '@expo/vector-icons'
+import { RectButton } from 'react-native-gesture-handler'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
@@ -46,3 +48,24 @@ export const CarsList = styled(FlatList as new () => FlatList<Car>).attrs({
     paddingBottom: getBottomSpace() + 4,
   },
 })``
+
+export const MyRents = styled(RectButton)`
+  ${({ theme: { colors } }) => css`
+    height: 56px;
+    width: 56px;
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    border-radius: ${56 / 2}px;
+    align-items: center;
+    justify-content: center;
+    background-color: ${colors.main};
+  `}
+`
+
+export const CarIcon = styled(Ionicons).attrs({})`
+  ${({ theme: { colors } }) => css`
+    color: ${colors.shape};
+    font-size: 28px;
+  `}
+`

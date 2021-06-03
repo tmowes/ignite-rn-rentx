@@ -37,7 +37,7 @@ export const AppSrc = () => {
   return (
     <ThemeProvider theme={themes.dark}>
       <NavigationContainer>
-        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
         <AppWrapper>
           <AppRoutes />
         </AppWrapper>

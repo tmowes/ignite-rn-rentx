@@ -46,6 +46,9 @@ export const Home = () => {
           )}
         />
       )}
+      <S.MyRents onPress={() => navigate('SchedulesList')}>
+        <S.CarIcon name="ios-car-sport" />
+      </S.MyRents>
     </S.Container>
   )
 }
