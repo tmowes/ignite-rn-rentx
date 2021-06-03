@@ -79,7 +79,7 @@ export const SchedulingDetails = () => {
         <C.IconButton />
       </S.Header>
       <S.SliderContainer>
-        <C.ImageSlider thumbnails={car.photos} />
+        <C.ImageSliderSnap thumbnails={car.photos} />
       </S.SliderContainer>
       <S.Content>
         <S.Details>

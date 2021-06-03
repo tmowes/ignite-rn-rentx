@@ -14,7 +14,6 @@ export const generateInterval = (start: DateObject, end: DateObject) => {
   })
   eachDayInterval.map(item => {
     const date = format(getPlatformDate(item), 'yyyy-MM-dd')
-    console.log(date)
     return Object.assign(interval, {
       [date]: {
         color:

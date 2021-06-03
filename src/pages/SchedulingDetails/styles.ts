@@ -14,6 +14,7 @@ export const Header = styled.View`
   align-items: center;
   justify-content: space-between;
   position: absolute;
+  padding: 0 16px;
   margin-top: ${getStatusBarHeight() + 18}px;
 `
 export const SliderContainer = styled.View`
@@ -92,7 +93,7 @@ export const RentalPeriod = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: 32px;
+    margin-top: 16px;
     border-bottom-width: 1px;
     border-bottom-color: ${colors.line};
     padding-bottom: 16px;
@@ -130,7 +131,7 @@ export const DateValue = styled.Text`
 
 export const RentalPrice = styled.View`
   width: 100%;
-  margin-top: 16px;
+  margin: 16px 0;
 `
 
 export const RentalPriceLabel = styled.Text`

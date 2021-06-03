@@ -9,7 +9,7 @@ const { Navigator, Screen } = createStackNavigator()
 export const StackRoutes = () => (
   <Navigator headerMode="none" initialRouteName="Splash">
     <Screen name="Splash" component={P.Splash} />
-    <Screen name="Home" component={P.Home} />
+    <Screen name="Home" component={P.Home} options={{ gestureEnabled: false }} />
     <Screen name="CarDetails" component={P.CarDetails} />
     <Screen name="Scheduling" component={P.Scheduling} />
     <Screen name="SchedulingDetails" component={P.SchedulingDetails} />

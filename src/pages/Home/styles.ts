@@ -5,8 +5,11 @@ import { RectButton } from 'react-native-gesture-handler'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
+import Animated from 'react-native-reanimated'
 
 import { Car } from '../../dtos'
+
+const AnimatedButton = Animated.createAnimatedComponent(RectButton)
 
 export const Container = styled.View`
   ${({ theme: { colors } }) => css`
@@ -21,7 +24,7 @@ export const Header = styled.View`
     height: 120px;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    padding: 0 24px;
     background-color: ${colors.header};
     padding-top: 32px;
   `}
@@ -49,7 +52,7 @@ export const CarsList = styled(FlatList as new () => FlatList<Car>).attrs({
   },
 })``
 
-export const MyRents = styled(RectButton)`
+export const MyRents = styled(Animated.View)`
   ${({ theme: { colors } }) => css`
     height: 56px;
     width: 56px;
@@ -60,7 +63,15 @@ export const MyRents = styled(RectButton)`
     align-items: center;
     justify-content: center;
     background-color: ${colors.main};
+    overflow: hidden;
   `}
+`
+
+export const MyRentsButton = styled(AnimatedButton)`
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 `
 
 export const CarIcon = styled(Ionicons).attrs({})`

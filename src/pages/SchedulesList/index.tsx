@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'
 
 import { useTheme } from 'styled-components/native'
+import { useNavigation } from '@react-navigation/native'
 
 import * as C from '../../components'
 import * as S from './styles'
@@ -10,6 +11,7 @@ import { api } from '../../services'
 
 export const SchedulesList = () => {
   const { colors } = useTheme()
+  const { navigate } = useNavigation()
   const [cars, setCars] = useState<CarByUser[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -32,7 +34,7 @@ export const SchedulesList = () => {
     <S.Container>
       <S.Header>
         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-        <C.IconButton color={colors.shape} />
+        <C.IconButton color={colors.shape} onPress={() => navigate('Home')} />
         <S.Title>
           Seus agendamentos, {'\n'}
           estão aqui.
@@ -40,7 +42,7 @@ export const SchedulesList = () => {
         <S.SubTitle>Conforto, segurança e praticidade.</S.SubTitle>
       </S.Header>
       {isLoading ? (
-        <C.Load />
+        <C.LoadAnimation />
       ) : (
         <S.Content>
           <S.Appointments>
@@ -49,7 +51,7 @@ export const SchedulesList = () => {
           </S.Appointments>
           <S.CarsList
             data={cars}
-            keyExtractor={item => item.id}
+            keyExtractor={item => String(item.id)}
             renderItem={({ item: { car, startDate, endDate } }) => (
               <S.CarWrapper>
                 <C.CarCard data={car} />
@@ -58,7 +60,6 @@ export const SchedulesList = () => {
                   <S.CarFooterPeriod>
                     <S.CarFooterDate>{startDate}</S.CarFooterDate>
                     <S.ArrowIcon />
-                    {/* <AntDesign name="arrowright" size={20} color={theme.colors.title} style={{marginHorizontal: 10}}/> */}
                     <S.CarFooterDate>{endDate}</S.CarFooterDate>
                   </S.CarFooterPeriod>
                 </S.CarFooter>

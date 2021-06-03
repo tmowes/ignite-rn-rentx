@@ -1,4 +1,5 @@
 import { getBottomSpace } from 'react-native-iphone-x-helper'
+import Animated from 'react-native-reanimated'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
 
@@ -42,4 +43,21 @@ export const Footer = styled.View`
   align-items: center;
   justify-content: center;
   padding: 32px 120px ${getBottomSpace() + 80}px;
+`
+export const DurationContainer = styled.View`
+  ${({ theme: { colors } }) => css`
+    height: 6px;
+    margin-top: -6px;
+    width: 100%;
+    background-color: ${colors.title};
+    overflow: hidden;
+  `}
+`
+
+export const DurationAnimated = styled(Animated.View)`
+  ${({ theme: { colors } }) => css`
+    height: 6px;
+    width: 100%;
+    background-color: ${colors.success};
+  `}
 `

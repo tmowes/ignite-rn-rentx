@@ -1,4 +1,5 @@
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper'
+import Animated from 'react-native-reanimated'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
 
@@ -9,26 +10,32 @@ export const Container = styled.View`
   `}
 `
 
+export const AnimatedHeader = styled(Animated.View)``
+
 export const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  margin-top: ${getStatusBarHeight() + 18}px;
+  padding: 0 16px;
+  margin-top: ${getStatusBarHeight() + 8}px;
+  overflow: hidden;
 `
-export const SliderContainer = styled.View`
+export const SliderContainer = styled(Animated.View)`
   margin-top: ${getStatusBarHeight() + 32}px;
+  margin-bottom: 16px;
 `
 
 export const Title = styled.Text`
   ${({ theme: { fonts } }) => css`
-    font-size: 30px;
+    font-size: ${RFValue(30)}px;
     font-family: ${fonts.secondary_600};
   `}
 `
 
-export const Content = styled.ScrollView.attrs({
+export const Content = styled(Animated.ScrollView).attrs({
   showsVerticalScrollIndicator: false,
+  scrollEventThrottle: 16,
   contentContainerStyle: { paddingHorizontal: 24, alignItems: 'center' },
 })``
 
@@ -80,7 +87,7 @@ export const About = styled.Text`
   ${({ theme: { colors, fonts } }) => css`
     font-family: ${fonts.primary_400};
     font-size: ${RFValue(15)}px;
-    line-height: ${RFValue(25)}px;
+    line-height: ${RFValue(24)}px;
     color: ${colors.text};
     text-align: justify;
     margin-top: 24px;
