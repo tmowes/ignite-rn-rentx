@@ -1,8 +1,11 @@
 export { Splash } from './Splash'
+export { SignIn } from './SignIn'
+export { SignUpFirstStep } from './SignUp/SignUpFirstStep'
+export { SignUpSecondStep } from './SignUp/SignUpSecondStep'
 export { Home } from './Home'
 export { CarDetails } from './CarDetails'
 export { Scheduling } from './Scheduling'
 export { SchedulingDetails } from './SchedulingDetails'
-export { SchedulingComplete } from './SchedulingComplete'
+export { Confirmation } from './Confirmation'
 
 export { SchedulesList } from './SchedulesList'

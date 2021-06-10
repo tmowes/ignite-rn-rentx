@@ -3,9 +3,9 @@ import React from 'react'
 import { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated'
 
 import * as S from './styles'
-import { DotIndexProps } from './types'
+import { BulletsDotsProps } from './types'
 
-export const DotIndex = (props: DotIndexProps) => {
+export const BulletsDots = (props: BulletsDotsProps) => {
   const { index, currIndex } = props
 
   const animatedDot = useAnimatedStyle(() => ({

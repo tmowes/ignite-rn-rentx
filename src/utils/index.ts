@@ -1,3 +1,5 @@
 export { calendarPTBRLocale } from './calendarLocale'
 export { getAccessoryIcon } from './getAccessoryIcon'
 export { getPlatformDate } from './getPlatformDate'
+export { signInSchema } from './signinSchema'
+export { signUpSchema } from './signupSchema'

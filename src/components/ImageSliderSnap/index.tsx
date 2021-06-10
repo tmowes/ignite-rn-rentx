@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated'
 
-import { DotIndex } from './DotIndex'
+import { BulletsDots } from '../BulletsDots'
 import * as S from './styles'
 import { ImageSliderProps } from './types'
 
@@ -27,7 +27,7 @@ export const ImageSliderSnap = (props: ImageSliderProps) => {
     <S.Container>
       <S.DotsContainer>
         {thumbnails.map((_, i) => (
-          <DotIndex key={String(i)} index={i} currIndex={currIndex} />
+          <BulletsDots key={String(i)} index={i} currIndex={currIndex} />
         ))}
       </S.DotsContainer>
       <Animated.ScrollView

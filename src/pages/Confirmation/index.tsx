@@ -3,7 +3,7 @@ import { StatusBar, useWindowDimensions } from 'react-native'
 
 import { RFValue } from 'react-native-responsive-fontsize'
 import { useTheme } from 'styled-components'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import {
   Extrapolate,
   interpolate,
@@ -17,12 +17,16 @@ import LogoSvg from '../../assets/logo_background_gray.svg'
 import DoneSvg from '../../assets/done.svg'
 import * as C from '../../components'
 import * as S from './styles'
+import { ConfirmationParams } from './types'
 
-export const SchedulingComplete = () => {
+export const Confirmation = () => {
   const { width } = useWindowDimensions()
   const { navigate } = useNavigation()
+  const { params } = useRoute()
   const { colors } = useTheme()
   const completeAnimation = useSharedValue(0)
+
+  const { title, message, nextScreen } = params as ConfirmationParams
 
   const animatedDuration = useAnimatedStyle(() => ({
     transform: [
@@ -37,7 +41,7 @@ export const SchedulingComplete = () => {
     ],
   }))
 
-  const startApp = () => navigate('SchedulesList')
+  const startApp = () => navigate(nextScreen)
 
   useEffect(() => {
     completeAnimation.value = withTiming(
@@ -60,18 +64,14 @@ export const SchedulingComplete = () => {
       <LogoSvg width={width} />
       <S.Content>
         <DoneSvg width={RFValue(80)} height={RFValue(80)} />
-        <S.Title>Carro alugado!</S.Title>
-        <S.Message>
-          Agora você só precisa ir{'\n'}
-          até a concessionária da RENTX{'\n'}
-          pegar o seu automóvel.
-        </S.Message>
+        <S.Title>{title}</S.Title>
+        <S.Message>{message}</S.Message>
       </S.Content>
       <S.Footer>
         <C.LabelButton
           label="Ok"
           color={colors.shapeSec}
-          onPress={() => navigate('SchedulesList')}
+          onPress={() => navigate(nextScreen)}
         />
         <S.DurationContainer>
           <S.DurationAnimated style={animatedDuration} />

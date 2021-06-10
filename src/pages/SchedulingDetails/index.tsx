@@ -59,7 +59,11 @@ export const SchedulingDetails = () => {
         id: car.id,
         unavailable_dates,
       })
-      navigate('SchedulingComplete')
+      navigate('Confirmation', {
+        nextScreen: 'SchedulesList',
+        title: 'Carro alugado!',
+        message: `Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.`,
+      })
     } catch (error) {
       Alert.alert('Não foi possivel cadastrar seu agendamento')
       console.log(error)
