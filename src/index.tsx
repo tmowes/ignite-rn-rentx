@@ -13,6 +13,7 @@ import {
 
 import * as themes from './styles/themes'
 import { AppRoutes } from './routes'
+import { AppProvider } from './contexts'
 
 const AppWrapper = styled.View`
   ${({ theme: { colors } }) => css`
@@ -35,13 +36,15 @@ export const AppSrc = () => {
   }
 
   return (
-    <ThemeProvider theme={themes.dark}>
-      <NavigationContainer>
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-        <AppWrapper>
-          <AppRoutes />
-        </AppWrapper>
-      </NavigationContainer>
-    </ThemeProvider>
+    <AppProvider>
+      <ThemeProvider theme={themes.dark}>
+        <NavigationContainer>
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+          <AppWrapper>
+            <AppRoutes />
+          </AppWrapper>
+        </NavigationContainer>
+      </ThemeProvider>
+    </AppProvider>
   )
 }
