@@ -46,11 +46,11 @@ export const CarDetails = () => {
         <S.Details>
           <S.Description>
             <S.Brand>{car.brand}</S.Brand>
-            <S.Model>{car.model}</S.Model>
+            <S.Model>{car.name}</S.Model>
           </S.Description>
           <S.Rent>
-            <S.Period>{car.rent.period}</S.Period>
-            <S.Price>{`R$ ${car.rent.price}`}</S.Price>
+            <S.Period>{car.period}</S.Period>
+            <S.Price>{`R$ ${car.price}`}</S.Price>
           </S.Rent>
         </S.Details>
         <S.AddonsContainer>

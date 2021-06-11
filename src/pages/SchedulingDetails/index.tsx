@@ -35,9 +35,9 @@ export const SchedulingDetails = () => {
 
   const rentTotal = useMemo(() => {
     const days = Number(dates.length)
-    const total = Number(days * car.rent.price)
+    const total = Number(days * car.price)
     return { days, total }
-  }, [car.rent.price, dates.length])
+  }, [car.price, dates.length])
 
   const confirmRentalData = async () => {
     setIsLoading(true)
@@ -89,11 +89,11 @@ export const SchedulingDetails = () => {
         <S.Details>
           <S.Description>
             <S.Brand>{car.brand}</S.Brand>
-            <S.Model>{car.model}</S.Model>
+            <S.Model>{car.name}</S.Model>
           </S.Description>
           <S.Rent>
-            <S.Period>{car.rent.period}</S.Period>
-            <S.Price>{`R$ ${car.rent.price}`}</S.Price>
+            <S.Period>{car.period}</S.Period>
+            <S.Price>{`R$ ${car.price}`}</S.Price>
           </S.Rent>
         </S.Details>
         <S.AddonsContainer>
@@ -118,7 +118,7 @@ export const SchedulingDetails = () => {
         <S.RentalPrice>
           <S.RentalPriceLabel>TOTAL</S.RentalPriceLabel>
           <S.RentalPriceDetails>
-            <S.RentalPriceQuota>{`R$ ${car.rent.price} x${rentTotal.days} diarias`}</S.RentalPriceQuota>
+            <S.RentalPriceQuota>{`R$ ${car.price} x${rentTotal.days} diarias`}</S.RentalPriceQuota>
             <S.RentalPriceTotal>{`R$ ${rentTotal.total}`}</S.RentalPriceTotal>
           </S.RentalPriceDetails>
         </S.RentalPrice>

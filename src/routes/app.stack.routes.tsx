@@ -6,13 +6,10 @@ import * as P from '../pages'
 
 const { Navigator, Screen } = createStackNavigator()
 
-export const StackRoutes = () => (
-  <Navigator headerMode="none" initialRouteName="SignIn">
+export const AppStackRoutes = () => (
+  <Navigator headerMode="none" initialRouteName="Splash">
     <Screen name="Splash" component={P.Splash} />
-    <Screen name="SignIn" component={P.SignIn} />
-    <Screen name="SignUpFirstStep" component={P.SignUpFirstStep} />
-    <Screen name="SignUpSecondStep" component={P.SignUpSecondStep} />
-    <Screen name="Home" component={P.Home} options={{ gestureEnabled: false }} />
+    <Screen name="Home" component={P.Home} />
     <Screen name="CarDetails" component={P.CarDetails} />
     <Screen name="Scheduling" component={P.Scheduling} />
     <Screen name="SchedulingDetails" component={P.SchedulingDetails} />

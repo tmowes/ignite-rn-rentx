@@ -1,23 +1,27 @@
 export type Car = {
   id: string
   brand: string
-  model: string
+  name: string
   about: string
-  rent: Rent
+  period: string
+  price: number
   fuel_type: string
   thumbnail: string
   accessories: Accessory[]
-  photos: string[]
+  photos: Photo[]
 }
 
 export type Accessory = {
+  id: string
+  car_id: string
   type: string
   name: string
 }
 
-export type Rent = {
-  period: string
-  price: number
+export type Photo = {
+  id: string
+  car_id: string
+  photo: string
 }
 
 export type CarByUser = {

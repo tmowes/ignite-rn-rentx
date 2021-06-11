@@ -26,6 +26,7 @@ export const PasswordInput = (props: PasswordInputProps) => {
         onFocus={inputFocus}
         onBlur={inputBlur}
         secureTextEntry={isPasswordVisible}
+        autoCorrect={false}
         {...attrs}
       />
       <S.ChangeVisibility onPress={() => setIsPasswordVisible(prev => !prev)}>

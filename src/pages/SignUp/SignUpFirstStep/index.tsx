@@ -3,7 +3,6 @@ import { Alert, Keyboard, KeyboardAvoidingView, StatusBar } from 'react-native'
 
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
-import { useTheme } from 'styled-components'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { useDerivedValue } from 'react-native-reanimated'
 
@@ -75,7 +74,7 @@ export const SignUpFirstStep = () => {
               onChangeText={setEmail}
             />
             <C.IconInput
-              iconName="user"
+              iconName="credit-card"
               placeholder="CNH"
               autoCorrect={false}
               keyboardType="numeric"

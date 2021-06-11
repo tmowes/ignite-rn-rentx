@@ -14,8 +14,10 @@ import {
 import BrandIcon from '../../assets/brand.svg'
 import Logo from '../../assets/logo.svg'
 import * as S from './styles'
+import { useAuth } from '../../contexts'
 
 export const Splash = () => {
+  const { user } = useAuth()
   const { navigate } = useNavigation()
   const splashAnimation = useSharedValue(0)
 
@@ -54,7 +56,7 @@ export const Splash = () => {
     ],
   }))
 
-  const startApp = () => navigate('Home')
+  const startApp = () => navigate(!user?.id ? 'SignIn' : 'Home')
 
   useEffect(() => {
     splashAnimation.value = withTiming(50, { duration: 1000 }, () => {

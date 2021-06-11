@@ -9,8 +9,10 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import * as S from './styles'
 import * as C from '../../components'
 import { signInSchema } from '../../utils'
+import { useAuth } from '../../contexts'
 
 export const SignIn = () => {
+  const { signIn } = useAuth()
   const { navigate } = useNavigation()
   const { colors } = useTheme()
   const [email, setEmail] = useState('')
@@ -19,8 +21,7 @@ export const SignIn = () => {
   const handleSignIn = async () => {
     try {
       await signInSchema.validate({ email, password })
-      return Alert.alert('Opa', 'Tudo certo!')
-      // navigate('Home')
+      signIn({ email, password })
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         return Alert.alert('Opa', error.message)

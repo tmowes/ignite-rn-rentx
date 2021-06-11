@@ -1,3 +1,5 @@
+import { Photo } from '../../dtos'
+
 export type ImageSliderProps = {
-  thumbnails: string[]
+  thumbnails: Photo[]
 }

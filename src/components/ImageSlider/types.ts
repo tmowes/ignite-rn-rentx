@@ -1,7 +1,9 @@
 import { ViewToken } from 'react-native'
 
+import { Photo } from '../../dtos'
+
 export type ImageSliderProps = {
-  thumbnails: string[]
+  thumbnails: Photo[]
 }
 export type DotIndexProps = {
   active: boolean

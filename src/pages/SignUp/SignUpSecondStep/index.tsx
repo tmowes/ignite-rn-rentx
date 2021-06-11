@@ -9,6 +9,7 @@ import { useDerivedValue } from 'react-native-reanimated'
 import * as S from './styles'
 import * as C from '../../../components'
 import { SignUpSecondStepParams } from './types'
+import { api } from '../../../services'
 
 export const SignUpSecondStep = () => {
   const { navigate } = useNavigation()
@@ -27,13 +28,22 @@ export const SignUpSecondStep = () => {
     if (password !== confirmPassword) {
       return Alert.alert('Opa', 'A senha e a confirmação não são iguais')
     }
-    // enviar user para API
-    console.log(user)
-    navigate('Confirmation', {
-      nextScreen: 'SignIn',
-      title: 'Conta Criada!',
-      message: `Agora é só fazer login\ne aproveitar`,
-    })
+
+    try {
+      await api.post('/users', {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      })
+      navigate('Confirmation', {
+        nextScreen: 'SignIn',
+        title: 'Conta Criada!',
+        message: `Agora é só fazer login\ne aproveitar`,
+      })
+    } catch (error) {
+      return Alert.alert('Erro no cadastro', 'Ocorreu um erro ao fazer cadastro')
+    }
   }
 
   return (

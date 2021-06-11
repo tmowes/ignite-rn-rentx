@@ -40,8 +40,8 @@ export const ImageSliderSnap = (props: ImageSliderProps) => {
         scrollEventThrottle={16}
       >
         {thumbnails.map(item => (
-          <S.CarImageContainer key={item}>
-            <S.CarImage source={{ uri: item }} resizeMode="contain" />
+          <S.CarImageContainer key={item.id}>
+            <S.CarImage source={{ uri: item.photo }} resizeMode="contain" />
           </S.CarImageContainer>
         ))}
       </Animated.ScrollView>

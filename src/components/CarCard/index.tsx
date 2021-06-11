@@ -5,17 +5,17 @@ import * as S from './styles'
 import { CarCardProps } from './types'
 
 export const CarCard = ({ data, ...attrs }: CarCardProps) => {
-  const { brand, model, thumbnail, fuel_type, rent } = data
+  const { brand, name, thumbnail, fuel_type, period, price } = data
   const MotorIcon = getAccessoryIcon(fuel_type)
   return (
     <S.Container {...attrs}>
       <S.Details>
         <S.Brand>{brand}</S.Brand>
-        <S.Model>{model}</S.Model>
+        <S.Model>{name}</S.Model>
         <S.About>
           <S.Rent>
-            <S.Period>{rent.period}</S.Period>
-            <S.Price>{`R$ ${rent.price}`}</S.Price>
+            <S.Period>{period}</S.Period>
+            <S.Price>{`R$ ${price}`}</S.Price>
           </S.Rent>
           <S.Type>
             <MotorIcon />

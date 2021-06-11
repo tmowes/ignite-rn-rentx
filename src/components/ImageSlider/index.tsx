@@ -20,13 +20,13 @@ export const ImageSlider = (props: ImageSliderProps) => {
       </S.DotsContainer>
       <FlatList
         data={thumbnails}
-        keyExtractor={key => key}
+        keyExtractor={key => key.id}
         horizontal
         showsHorizontalScrollIndicator={false}
         onViewableItemsChanged={indexChanged.current}
         renderItem={({ item }) => (
           <S.CarImageContainer>
-            <S.CarImage source={{ uri: item }} resizeMode="contain" />
+            <S.CarImage source={{ uri: item.photo }} resizeMode="contain" />
           </S.CarImageContainer>
         )}
       />

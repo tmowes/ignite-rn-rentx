@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BackHandler, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 
 import { RFValue } from 'react-native-responsive-fontsize'
 import { useNavigation } from '@react-navigation/native'
@@ -44,23 +44,27 @@ export const Home = () => {
     },
   })
 
-  const loadCars = async () => {
+  const loadCars = async (isMonted: boolean) => {
     try {
       const { data } = await api.get('cars')
-      setCars(data)
+      if (isMonted) {
+        setCars(data)
+      }
     } catch (error) {
       console.log(error)
     } finally {
-      setIsLoading(false)
+      if (isMonted) {
+        setIsLoading(false)
+      }
     }
   }
 
   useEffect(() => {
-    loadCars()
-  }, [])
-
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true)
+    let isMonted = true
+    loadCars(isMonted)
+    return () => {
+      isMonted = false
+    }
   }, [])
 
   return (

@@ -1,1 +1,1 @@
-export { Accessory, Car, Rent } from './carDTO'
+export { Accessory, Car, Photo } from './carDTO'
