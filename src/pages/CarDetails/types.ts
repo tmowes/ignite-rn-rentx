@@ -1,5 +1,5 @@
-import { Car } from '../../dtos'
+import { ModelCar } from '../../databases'
 
 export type RouteParams = {
-  car: Car
+  car: ModelCar
 }

@@ -6,18 +6,21 @@ import { RFValue } from 'react-native-responsive-fontsize'
 import { useTheme } from 'styled-components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import format from 'date-fns/format'
+import { useNetInfo } from '@react-native-community/netinfo'
 
 import * as C from '../../components'
 import * as S from './styles'
 import { RentalPeriod, RouteParams } from './types'
 import { getAccessoryIcon, getPlatformDate } from '../../utils'
 import { api } from '../../services'
+import { Car, Photo } from '../../dtos'
 
 export const SchedulingDetails = () => {
   const { navigate } = useNavigation()
+  const { isConnected } = useNetInfo()
   const { colors } = useTheme()
   const { params } = useRoute()
-
+  const [onlineCar, setOnlineCar] = useState({} as Car)
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -39,26 +42,30 @@ export const SchedulingDetails = () => {
     return { days, total }
   }, [car.price, dates.length])
 
+  const checkedPhotos = onlineCar.photos
+    ? onlineCar.photos
+    : ([{ id: car.thumbnail, photo: car.thumbnail }] as Photo[])
+
   const confirmRentalData = async () => {
     setIsLoading(true)
-    const schedulesByCar = await api.get(`schedules_bycars/${car.id}`)
-    const unavailable_dates = [...schedulesByCar.data.unavailable_dates, ...dates]
+    // const schedulesByCar = await api.get(`schedules_bycars/${car.id}`)
+    // const unavailable_dates = [...schedulesByCar.data.unavailable_dates, ...dates]
 
     try {
-      await api.post('schedules_byuser', {
+      // await api.post('schedules_byuser', {
+      await api.post('rentals', {
         user_id: 1,
-        car,
-        startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-        endDate: format(
-          getPlatformDate(new Date(dates[dates.length - 1])),
-          'dd/MM/yyyy'
-        ),
+        car_id: car.id,
+        // car,
+        start_date: new Date(dates[0]),
+        end_date: new Date(dates[dates.length - 1]),
+        total: rentTotal.total,
       })
 
-      await api.put(`schedules_bycars/${car.id}`, {
-        id: car.id,
-        unavailable_dates,
-      })
+      // await api.put(`schedules_bycars/${car.id}`, {
+      //   id: car.id,
+      //   unavailable_dates,
+      // })
       navigate('Confirmation', {
         nextScreen: 'SchedulesList',
         title: 'Carro alugado!',
@@ -76,6 +83,16 @@ export const SchedulingDetails = () => {
     getRentalPeriod()
   }, [getRentalPeriod])
 
+  useEffect(() => {
+    const loadOnlineCar = async () => {
+      const { data } = await api.get<Car>(`cars/${car.id}`)
+      setOnlineCar(data)
+    }
+    if (isConnected === true) {
+      loadOnlineCar()
+    }
+  }, [car, isConnected])
+
   return (
     <S.Container>
       <S.Header>
@@ -83,7 +100,7 @@ export const SchedulingDetails = () => {
         <C.IconButton />
       </S.Header>
       <S.SliderContainer>
-        <C.ImageSliderSnap thumbnails={car.photos} />
+        <C.ImageSliderSnap thumbnails={checkedPhotos} />
       </S.SliderContainer>
       <S.Content>
         <S.Details>
@@ -96,11 +113,13 @@ export const SchedulingDetails = () => {
             <S.Price>{`R$ ${car.price}`}</S.Price>
           </S.Rent>
         </S.Details>
-        <S.AddonsContainer>
-          {car.accessories.map(({ name, type }) => (
-            <C.AddonsCard key={type} name={name} icon={getAccessoryIcon(type)} />
-          ))}
-        </S.AddonsContainer>
+        {onlineCar.accessories && (
+          <S.AddonsContainer>
+            {onlineCar.accessories.map(({ name, type }) => (
+              <C.AddonsCard key={type} name={name} icon={getAccessoryIcon(type)} />
+            ))}
+          </S.AddonsContainer>
+        )}
         <S.RentalPeriod>
           <S.CalendarIcon>
             <Feather name="calendar" size={RFValue(24)} color={colors.shape} />

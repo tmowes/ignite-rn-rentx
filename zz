@@ -1,0 +1,10 @@
+del node_modules
+yarn cache clean
+yarn
+cd android &&./gradlew clean && cd ../
+1*terminal yarn start -- --reset-cache
+2*terminal yarn run android
+
+if fails
+rr in emulator and r to reload in terminal with yarn start wait load
+and re-run yarn run android in split terminal

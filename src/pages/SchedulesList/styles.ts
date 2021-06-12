@@ -5,7 +5,7 @@ import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper
 import { RFValue } from 'react-native-responsive-fontsize'
 import { AntDesign } from '@expo/vector-icons'
 
-import { CarByUser } from '../../dtos/carDTO'
+import { RentalData } from './types'
 
 export const Container = styled.View`
   ${({ theme: { colors } }) => css`
@@ -70,7 +70,7 @@ export const AppointmentQuantity = styled.Text`
     color: ${colors.text};
   `}
 `
-export const CarsList = styled(FlatList as new () => FlatList<CarByUser>).attrs({
+export const CarsList = styled(FlatList as new () => FlatList<RentalData>).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     paddingBottom: getBottomSpace() + 4,

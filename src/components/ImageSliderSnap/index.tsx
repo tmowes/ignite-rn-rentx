@@ -1,6 +1,7 @@
 import React from 'react'
 import { useWindowDimensions } from 'react-native'
 
+import FastImage from 'react-native-fast-image'
 import Animated, {
   useAnimatedScrollHandler,
   useDerivedValue,
@@ -41,7 +42,10 @@ export const ImageSliderSnap = (props: ImageSliderProps) => {
       >
         {thumbnails.map(item => (
           <S.CarImageContainer key={item.id}>
-            <S.CarImage source={{ uri: item.photo }} resizeMode="contain" />
+            <S.CarImage
+              source={{ uri: item.photo }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
           </S.CarImageContainer>
         ))}
       </Animated.ScrollView>

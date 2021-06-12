@@ -1,7 +1,7 @@
 import { RectButtonProps } from 'react-native-gesture-handler'
 
-import { Car } from '../../dtos'
+import { ModelCar } from '../../databases'
 
 export type CarCardProps = RectButtonProps & {
-  data: Car
+  data: ModelCar
 }

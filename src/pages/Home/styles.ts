@@ -7,7 +7,7 @@ import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
 import Animated from 'react-native-reanimated'
 
-import { Car } from '../../dtos'
+import { ModelCar } from '../../databases'
 
 const AnimatedButton = Animated.createAnimatedComponent(RectButton)
 
@@ -43,7 +43,7 @@ export const Title = styled.Text`
   `}
 `
 
-export const CarsList = styled(FlatList as new () => FlatList<Car>).attrs({
+export const CarsList = styled(FlatList as new () => FlatList<ModelCar>).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     paddingTop: 16,

@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { FlatList } from 'react-native'
 
+import FastImage from 'react-native-fast-image'
+
 import * as S from './styles'
 import { ChangeImgProps, ImageSliderProps } from './types'
 
@@ -26,7 +28,10 @@ export const ImageSlider = (props: ImageSliderProps) => {
         onViewableItemsChanged={indexChanged.current}
         renderItem={({ item }) => (
           <S.CarImageContainer>
-            <S.CarImage source={{ uri: item.photo }} resizeMode="contain" />
+            <S.CarImage
+              source={{ uri: item.photo }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
           </S.CarImageContainer>
         )}
       />

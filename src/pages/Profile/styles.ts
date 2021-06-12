@@ -1,10 +1,9 @@
-import { RectButton } from 'react-native-gesture-handler'
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler'
 import { Feather } from '@expo/vector-icons'
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper'
 import { RFValue } from 'react-native-responsive-fontsize'
 import styled, { css } from 'styled-components/native'
-
-import { StyledTabProps } from './types'
+import Animated from 'react-native-reanimated'
 
 export const Container = styled.View`
   ${({ theme: { colors } }) => css`
@@ -80,6 +79,8 @@ export const AvatarIcon = styled(Feather)`
 
 export const Content = styled.View`
   padding: 0 24px;
+  align-items: center;
+  position: relative;
 `
 
 export const ContentTabs = styled.View`
@@ -87,34 +88,23 @@ export const ContentTabs = styled.View`
     width: 100%;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     border-bottom-width: 1px;
     border-bottom-color: ${colors.line};
     margin-bottom: 16px;
   `}
 `
 
-// eslint-disable-next-line prettier/prettier
-export const TabItem = styled.TouchableOpacity<StyledTabProps>`
-  ${({ theme: { colors }, active }) => css`
-    padding-bottom: 8px;
-    ${active &&
-    css`
-      border-bottom-width: 2px;
-      border-bottom-color: ${colors.main};
-    `}
-  `}
+export const TabItem = styled(BorderlessButton)`
+  padding-bottom: 8px;
+  width: 50%;
 `
 
-export const TabTitle = styled.Text<StyledTabProps>`
-  ${({ theme: { colors, fonts }, active }) => css`
+export const TabTitle = styled(Animated.Text)`
+  ${({ theme: { fonts } }) => css`
     font-family: ${fonts.secondary_600};
     font-size: ${RFValue(20)}px;
-    color: ${colors.textDetails};
-    ${active &&
-    css`
-      color: ${colors.title};
-    `}
+    text-align: center;
   `}
 `
 
